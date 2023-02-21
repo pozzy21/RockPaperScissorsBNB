@@ -1,0 +1,35 @@
+.center {
+    width: 400px; /* Ширина элемента в пикселах */
+    padding: 40px; /* Поля вокруг текста */
+    margin: auto; /* Выравниваем по центру */
+    background: #fc0; /* Цвет фона */
+    border-radius: 20px;
+    height: 10em;
+    position: relative;
+    margin-top: 10%;
+   }
+
+h1{
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 32px;
+    font-weight: bold;
+    margin: auto;
+}
+
+.container {
+    width: 100%;
+    max-width: 1024px; /*максимальная ширина может иметь другое значение*/
+    padding: 0 15px;
+    margin: 0 auto;
+  }
+
+header{
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    border-radius: 10px;
+    position: relative;
+    background: #fc0; /* Цвет фона */
+    padding: 10px;
+
+  }
