@@ -11,24 +11,34 @@
     <script src = "script.js"></script>
 
 </head>
-<body bgcolor="#808080">
+<body>
+    
     <header> 
-    <div class="head">
-        <h1>BNB-Chain x tern.crypto Mini Challenge 1</h1>
+    <div class = "top">
+        <h1>BNB-Chain</h1>
     </div>
     </header>
-
-    <div class = "center">
-        <h2> Coin Flipper Dapp</h2>
-        <p> Add amount in BNB to play</p>
-        <input type="number" min = "0" id = "amountInEth">
-        <button onclick="flipCoin(0)">ROCK</button>
-        <button onclick="flipCoin(1)">PAPPER</button>
-        <button onclick="flipCoin(2)">SCISSOR</button>
+    
+    <div class = "text" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+        <h2>Rock Paper Scissors</h2>
+        <input value = "0.0001" type="number" min = "0" id = "amountInEth">
+    
+    <div>
+    <a onclick="flipCoin(0)" class="sliding-button">🪨🪨🪨</a>
+    <a onclick="flipCoin(1)" class="sliding-button">🧻🧻🧻</a>
+    <a onclick="flipCoin(2)" class="sliding-button">✂️✂️✂️</a>
     </div>
+    <div class = "text">
+        <h2>Last Game:</h2>
+        <div id = "resultLog"></div>
+    </div>
+    <div class = "text">
+        <h2>History:</h2>
+        <div id = "games"></div>
+    </div>
+    
+    
 
-    <footer  class="container">
-        <p>TG:<a href="https://t.me/pozzy21">@pozzy21</a></p>
-      </footer> 
+</div>
 </body>
 </html>

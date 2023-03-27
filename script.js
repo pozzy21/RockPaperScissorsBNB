@@ -1,4 +1,4 @@
-const contractAddress = "0x8613BE02E18e637726551d3588754946Bb91a4DB";
+const contractAddress = "0xcf6d4163DBcaA4C5F0eCD43DAF2a0d33f46AD09A";
 const contractABI = [
 	{
 		"inputs": [],
@@ -80,7 +80,6 @@ provider.send("eth_requestAccounts", []).then(()=>{
             contractABI,
             signer
         )
-     
     }
     )
 }
@@ -89,15 +88,15 @@ provider.send("eth_requestAccounts", []).then(()=>{
 async function flipCoin(_option){
     let amountInEth = document.getElementById("amountInEth").value;
     let amountInWei = ethers.utils.parseEther(amountInEth.toString())
-    console.log(amountInWei);
+    //console.log(amountInWei);
     
     let resultOfCoinFlip = await contract.RockPaperScissor(_option, {value: amountInWei});
     const res = await resultOfCoinFlip.wait();
     console.log(res);
-    //console.log( await res.events[0].args.player.toString());
+    //console.log(await res.events[0].args.player.toString());
     
 
-    let queryResult =  await contract.queryFilter('Game', await provider.getBlockNumber() - 10000, await provider.getBlockNumber());
+    let queryResult =  await contract.queryFilter('Game', await provider.getBlockNumber() - 100, await provider.getBlockNumber());
     let queryResultRecent = queryResult[queryResult.length-1]
     //console.log(queryResult[queryResult.length-1].args);
 
@@ -106,37 +105,69 @@ async function flipCoin(_option){
     let option = await queryResultRecent.args.option.toString();
     let result = await queryResultRecent.args.result.toString();
 
+
+	alert(result);
     let resultLogs = `
     stake amount: ${ethers.utils.formatEther(amount.toString())} BNB, 
     player: ${player}, 
-    player chose: ${option ==0 ? "HEAD": "TAIL"}, 
-    result: ${result == false ? "LOSE 😥": "WIN 🎉"}`;
+	${result == 2 ? "result: WIN 😥":""}
+	${result == 1 ? "result: LOSE 😥":""}
+	${result == 0 ? "result: DRAW 😥":""}`
     console.log(resultLogs);
+
+
+
+
 
     let resultLog = document.getElementById("resultLog");
     resultLog.innerText = resultLogs;
 
     handleEvent();
+	sendMessage();
 }
 
 async function handleEvent(){
 
-    //console.log(await contract.filters.CoinFlipped());
-    let queryResult =  await contract.queryFilter('Game', await provider.getBlockNumber() - 10000, await provider.getBlockNumber());
+    console.log(await contract.filters.Game());
+    let queryResult =  await contract.queryFilter('Game', await provider.getBlockNumber() - 100, await provider.getBlockNumber());
     let queryResultRecent = queryResult[queryResult.length-1]
     let amount = await queryResultRecent.args.amount.toString();
     let player = await queryResultRecent.args.player.toString();
     let option = await queryResultRecent.args.option.toString();
     let result = await queryResultRecent.args.result.toString();
-
     let resultLogs = `
     stake amount: ${ethers.utils.formatEther(amount.toString())} BNB, 
     player: ${player}, 
-    player chose: ${option ==0 ? "HEAD": "TAIL"}, 
-    result: ${result == false ? "LOSE 😥": "WIN 🎉"}`;
+     ${result == 2 ? "result: WIN 😥":""}
+	 ${result == 1 ? "result: LOSE 😥":""}
+	 ${result == 0 ? "result: DRAW 😥":""}`
     console.log(resultLogs);
+
+
+
+
+
 
     let resultLog = document.getElementById("resultLog");
     resultLog.innerText = resultLogs;
-    
 }
+
+
+async function sendMessage() {
+	let queryResult =  await contract.queryFilter('Game', await provider.getBlockNumber() - 100, await provider.getBlockNumber());
+    let queryResultRecent = queryResult[queryResult.length-1]
+    let amount = await queryResultRecent.args.amount.toString();
+    let player = await queryResultRecent.args.player.toString();
+    let option = await queryResultRecent.args.option.toString();
+    let result = await queryResultRecent.args.result.toString();
+    let resultLogs = `
+    stake amount: ${ethers.utils.formatEther(amount.toString())} BNB, 
+    player: ${player}, 
+	${result == 2 ? "result: WIN 😥":""}
+	${result == 1 ? "result: LOSE 😥":""}
+	${result == 0 ? "result: DRAW 😥":""}`
+
+	  let game = document.getElementById("games");
+	  game.innerHTML += "<p>" + resultLogs + "</p>";
+	
+  }
